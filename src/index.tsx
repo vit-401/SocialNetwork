@@ -10,7 +10,7 @@ import './index.css';
 export let rerenderEntireTree = () => {
     ReactDOM.render(
         <React.StrictMode>
-            <App store={store} addPost={store.addPost} updateNewPostText={store.updateNewPostText}/>
+            <App store={store} />
         </React.StrictMode>,
         document.getElementById('root')
     );

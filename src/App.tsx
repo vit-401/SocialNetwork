@@ -6,14 +6,13 @@ import {Profile} from "./components/Profile/Profile";
 import {BrowserRouter, Route} from 'react-router-dom';
 import News from "./components/News/News";
 import Settings from "./components/Settings/Settings";
+import {stateType} from "./Redux/state";
 
 type propsAppType = {
-    state: any
-    addPost: () => void
-    updateNewPostText: (x: string) => void
+    store:stateType
 }
 
-const App: React.FC<any> = (props) => {
+const App: React.FC<propsAppType> = (props) => {
     let state = props.store.getState()
     console.log(state)
     return (
@@ -23,8 +22,8 @@ const App: React.FC<any> = (props) => {
                 <Navbar/>
                 <div className='content'>
                     <Route path='/profile' render={() => <Profile profilePage={state.profilePage}
-                                                                  addPost={props.store.addPost.bind(props.store)}
-                                                                  updateNewPostText={props.store.updateNewPostText.bind(props.store)}/>}/>
+                                                                  dispatch={props.store.dispatch.bind(props.store)}
+                                                                  />}/>
                     {/*<Route path='/dialogs' render={() => <Dialogs dialogs={props.store.state.dialogs}*/}
                     {/*                                              messages={props.store.state.messages}/>}/>*/}
                     <Route path='/news' render={() => <News/>}/>

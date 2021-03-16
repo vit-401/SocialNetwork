@@ -24,12 +24,27 @@ export type stateType = {
         dialogs: Array<dialogsType>
         messages: Array<messagesType>
     }
-    updateNewPostText: (x: any) => void
     subscribe: (x: any) => void
-    addPost: () => void
     onChange: (x: any) => void
-    getState: () => void
+    getState: () => any
+    dispatch: (action: ActinTypes) => void
 }
+
+export type ActinTypes = ReturnType<typeof addPostAC> | ReturnType<typeof changeNewTextAC>
+
+
+export const addPostAC = () => {
+    return {
+        type: 'ADD-POST'
+    } as const
+}
+export const changeNewTextAC = (newText: string) => {
+    return {
+        type: 'ADD-POST',
+        newText: newText
+    }
+}
+
 
 
 export let store: stateType = {
@@ -56,21 +71,6 @@ export let store: stateType = {
             {id: 3, message: "Let go to school!!! =)"}
         ]
     },
-    updateNewPostText(newText) {
-        debugger
-        this.state.profilePage.newPostText = newText
-        this.onChange(store.state)
-    },
-
-    addPost() {
-        let newPost: postsType = {
-            id: 5,
-            post: this.state.profilePage.newPostText,
-            likesCount: '0'
-        }
-        this.state.profilePage.posts.push(newPost)
-        this.onChange(this.state)
-    },
     onChange() {
         console.log('test')
     },
@@ -80,5 +80,20 @@ export let store: stateType = {
 
     getState() {
         return this.state
+    },
+    dispatch(action) {
+        debugger
+        if (action.type === 'ADD-POST') {
+            let newPost: postsType = {
+                id: new Date().getTime(),
+                post:this.state.profilePage.newPostText,
+                likesCount: '0'
+            }
+            this.state.profilePage.posts.push(newPost)
+            this.onChange(this.state)
+        } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
+            this.state.profilePage.newPostText = action.newText
+            this.onChange(store.state)
+        }
     }
 }

@@ -5,13 +5,12 @@ import {postsType, profilePageType, stateType} from "../../Redux/state";
 
 type propsProfileType = {
     profilePage: profilePageType
-    addPost: () => void
-    updateNewPostText: (x: string) => void
+    dispatch: any
 }
 
 export const Profile: React.FC<propsProfileType> = (props) => {
     return <div>
         <ProfileInfo/>
-        <MyPosts profilePage={props.profilePage} addPost={props.addPost} updateNewPostText={props.updateNewPostText}/>
+        <MyPosts dispatch={props.dispatch} profilePage={props.profilePage}/>
     </div>;
 }
