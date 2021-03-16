@@ -2,36 +2,31 @@ import React from 'react';
 import './App.scss';
 import {Navbar} from "./components/Navbar/Navbar";
 import {Header} from "./components/Header/Header";
-import Dialogs from "./components/Dialogs/Dialogs";
 import {Profile} from "./components/Profile/Profile";
 import {BrowserRouter, Route} from 'react-router-dom';
 import News from "./components/News/News";
 import Settings from "./components/Settings/Settings";
-import {dialogsType, stateType, updateNewPostText} from "./Redux/state";
 
 type propsAppType = {
-    state: stateType
+    state: any
     addPost: () => void
     updateNewPostText: (x: string) => void
 }
 
-const App: React.FC<propsAppType> = (props) => {
-    // // @ts-ignore
-    // const ProfileHOC: React.FC = () => <Profile/>
-    // const DialogsHOC: React.FC = () => <Dialogs dialogs={props.dialogs} message={props.messages}  />
-    // const NewsHOC: React.FC = () => <News/>;
-    // const SettingsHOC: React.FC = () => <Settings/>;
+const App: React.FC<any> = (props) => {
+    let state = props.store.getState()
+    console.log(state)
     return (
         <BrowserRouter>
             <div className='app-wrapper'>
                 <Header/>
                 <Navbar/>
                 <div className='content'>
-                    <Route path='/profile' render={() => <Profile profilePage={props.state.profilePage}
-                                                                  addPost={props.addPost}
-                                                                  updateNewPostText={props.updateNewPostText}/>}/>
-                    <Route path='/dialogs' render={() => <Dialogs dialogs={props.state.dialogs}
-                                                                  messages={props.state.messages}/>}/>
+                    <Route path='/profile' render={() => <Profile profilePage={state.profilePage}
+                                                                  addPost={props.store.addPost.bind(props.store)}
+                                                                  updateNewPostText={props.store.updateNewPostText.bind(props.store)}/>}/>
+                    {/*<Route path='/dialogs' render={() => <Dialogs dialogs={props.store.state.dialogs}*/}
+                    {/*                                              messages={props.store.state.messages}/>}/>*/}
                     <Route path='/news' render={() => <News/>}/>
                     <Route path='/settings' render={() => <Settings/>}/>
                 </div>

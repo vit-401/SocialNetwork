@@ -1,8 +1,5 @@
 // import {rerenderEntireTree} from "../index";
 
-let rerenderEntireTree: (state: any) => void = () => {
-    console.log('test')
-}
 
 export type messagesType = {
     id: number
@@ -22,52 +19,66 @@ export type postsType = {
     likesCount: string
 }
 export type stateType = {
-    profilePage: profilePageType
-    dialogs: Array<dialogsType>
-    messages: Array<messagesType>
+    state: {
+        profilePage: profilePageType
+        dialogs: Array<dialogsType>
+        messages: Array<messagesType>
+    }
+    updateNewPostText: (x: any) => void
+    subscribe: (x: any) => void
+    addPost: () => void
+    onChange: (x: any) => void
+    getState: () => void
 }
-export type addPostType = () => any
-export type updataNewTextType = (m: string) => any
 
 
-export let state: stateType = {
-    profilePage: {
-        posts: [
-            {id: 1, post: 'Post 1', likesCount: '32'},
-            {id: 2, post: 'Post 2', likesCount: '21'},
-            {id: 3, post: 'Post 3', likesCount: '14'}
+export let store: stateType = {
+    state: {
+        profilePage: {
+            posts: [
+                {id: 1, post: 'Post 1', likesCount: '32'},
+                {id: 2, post: 'Post 2', likesCount: '21'},
+                {id: 3, post: 'Post 3', likesCount: '14'}
+            ],
+            newPostText: ''
+
+        },
+
+        dialogs: [
+            {id: 1, name: "Vitally"},
+            {id: 2, name: "Andrey"},
+            {id: 3, name: "Alex"},
+            {id: 4, name: "Bob"}
         ],
-        newPostText: ''
-
+        messages: [
+            {id: 1, message: "Hello"},
+            {id: 2, message: "how are you?"},
+            {id: 3, message: "Let go to school!!! =)"}
+        ]
+    },
+    updateNewPostText(newText) {
+        debugger
+        this.state.profilePage.newPostText = newText
+        this.onChange(store.state)
     },
 
-    dialogs: [
-        {id: 1, name: "Vitally"},
-        {id: 2, name: "Andrey"},
-        {id: 3, name: "Alex"},
-        {id: 4, name: "Bob"}
-    ],
-    messages: [
-        {id: 1, message: "Hello"},
-        {id: 2, message: "how are you?"},
-        {id: 3, message: "Let go to school!!! =)"}
-    ]
-}
-export const addPost: addPostType = () => {
-    let newPost: postsType = {
-        id: 5,
-        post: state.profilePage.newPostText,
-        likesCount: '0'
+    addPost() {
+        let newPost: postsType = {
+            id: 5,
+            post: this.state.profilePage.newPostText,
+            likesCount: '0'
+        }
+        this.state.profilePage.posts.push(newPost)
+        this.onChange(this.state)
+    },
+    onChange() {
+        console.log('test')
+    },
+    subscribe(callback) {
+        this.onChange = callback
+    },
+
+    getState() {
+        return this.state
     }
-    state.profilePage.posts.push(newPost)
-    rerenderEntireTree(state)
-}
-export const updateNewPostText: updataNewTextType = (newText) => {
-    state.profilePage.newPostText = newText
-    rerenderEntireTree(state)
-}
-export const subscribe = (observer: any) => {
-    rerenderEntireTree = observer
-    console.log(observer)
-    console.log(rerenderEntireTree)
 }
