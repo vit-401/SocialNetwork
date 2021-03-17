@@ -21,8 +21,11 @@ export type postsType = {
 export type stateType = {
     state: {
         profilePage: profilePageType
-        dialogs: Array<dialogsType>
-        messages: Array<messagesType>
+        dialogsPage: {
+            dialogs: Array<dialogsType>
+            messages: Array<messagesType>,
+            newMassageBody: string
+        }
     }
     subscribe: (x: any) => void
     onChange: (x: any) => void
@@ -30,21 +33,11 @@ export type stateType = {
     dispatch: (action: ActinTypes) => void
 }
 
-export type ActinTypes = ReturnType<typeof addPostAC> | ReturnType<typeof changeNewTextAC>
-
-
-export const addPostAC = () => {
-    return {
-        type: 'ADD-POST'
-    } as const
-}
-export const changeNewTextAC = (newText: string) => {
-    return {
-        type: 'ADD-POST',
-        newText: newText
-    }
-}
-
+export type ActinTypes =
+    ReturnType<typeof addPostACFunc>
+    | ReturnType<typeof updateNewPostTexttACFunc>
+    | ReturnType<typeof addNewMessageCreator>
+    | ReturnType<typeof updateNewMessageCreator>
 
 
 export let store: stateType = {
@@ -58,18 +51,20 @@ export let store: stateType = {
             newPostText: ''
 
         },
-
-        dialogs: [
-            {id: 1, name: "Vitally"},
-            {id: 2, name: "Andrey"},
-            {id: 3, name: "Alex"},
-            {id: 4, name: "Bob"}
-        ],
-        messages: [
-            {id: 1, message: "Hello"},
-            {id: 2, message: "how are you?"},
-            {id: 3, message: "Let go to school!!! =)"}
-        ]
+        dialogsPage: {
+            dialogs: [
+                {id: 1, name: "Vitally"},
+                {id: 2, name: "Andrey"},
+                {id: 3, name: "Alex"},
+                {id: 4, name: "Bob"}
+            ],
+            messages: [
+                {id: 1, message: "Hello"},
+                {id: 2, message: "how are you?"},
+                {id: 3, message: "Let go to school!!! =)"}
+            ],
+            newMassageBody: ''
+        }
     },
     onChange() {
         console.log('test')
@@ -82,18 +77,31 @@ export let store: stateType = {
         return this.state
     },
     dispatch(action) {
-        debugger
         if (action.type === 'ADD-POST') {
             let newPost: postsType = {
                 id: new Date().getTime(),
-                post:this.state.profilePage.newPostText,
+                post: this.state.profilePage.newPostText,
                 likesCount: '0'
             }
             this.state.profilePage.posts.push(newPost)
             this.onChange(this.state)
         } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
             this.state.profilePage.newPostText = action.newText
-            this.onChange(store.state)
+            this.onChange(this.state)
+        } else if (action.type === 'ADD-NEW-MESSAGE-BODY') {
+            let newMessageBody: any = {
+                id: new Date().getTime(),
+                message: this.state.dialogsPage.newMassageBody
+            }
+            this.state.dialogsPage.messages.push(newMessageBody)
+            this.onChange(this.state)
+        } else if (action.type === 'UPDATE-NEW-MESSAGE-BODY') {
+            this.state.dialogsPage.newMassageBody = action.newMessage
+            this.onChange(this.state)
         }
     }
 }
+export const addPostACFunc = () => ({type: 'ADD-POST'} as const)
+export const updateNewPostTexttACFunc = (text: string) => ({type: 'UPDATE-NEW-POST-TEXT', newText: text} as const)
+export const addNewMessageCreator = () => ({type: 'ADD-NEW-MESSAGE-BODY'} as const)
+export const updateNewMessageCreator = (body: string) => ({type: 'UPDATE-NEW-MESSAGE-BODY', newMessage: body} as const)

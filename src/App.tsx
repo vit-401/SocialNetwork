@@ -7,6 +7,7 @@ import {BrowserRouter, Route} from 'react-router-dom';
 import News from "./components/News/News";
 import Settings from "./components/Settings/Settings";
 import {stateType} from "./Redux/state";
+import Dialogs from "./components/Dialogs/Dialogs";
 
 type propsAppType = {
     store:stateType
@@ -14,7 +15,6 @@ type propsAppType = {
 
 const App: React.FC<propsAppType> = (props) => {
     let state = props.store.getState()
-    console.log(state)
     return (
         <BrowserRouter>
             <div className='app-wrapper'>
@@ -24,8 +24,8 @@ const App: React.FC<propsAppType> = (props) => {
                     <Route path='/profile' render={() => <Profile profilePage={state.profilePage}
                                                                   dispatch={props.store.dispatch.bind(props.store)}
                                                                   />}/>
-                    {/*<Route path='/dialogs' render={() => <Dialogs dialogs={props.store.state.dialogs}*/}
-                    {/*                                              messages={props.store.state.messages}/>}/>*/}
+                    <Route path='/dialogs' render={() => <Dialogs dialogsPage={props.store.state.dialogsPage}
+                                                                  dispatch={props.store.dispatch.bind(props.store)}/>}/>
                     <Route path='/news' render={() => <News/>}/>
                     <Route path='/settings' render={() => <Settings/>}/>
                 </div>

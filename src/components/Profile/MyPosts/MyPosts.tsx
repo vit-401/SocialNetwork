@@ -1,7 +1,7 @@
 import React, {LegacyRef} from "react";
 import s from './style.module.scss';
 import {Post} from "../../Post/Post";
-import {postsType, profilePageType} from "../../../Redux/state";
+import {addPostACFunc, postsType, profilePageType, updateNewPostTexttACFunc} from "../../../Redux/state";
 
 type propsMyPostsType = {
     profilePage: profilePageType
@@ -12,13 +12,13 @@ type propsMyPostsType = {
 export const MyPosts: React.FC<propsMyPostsType> = (props) => {
     const newPostElement: LegacyRef<HTMLTextAreaElement> = React.createRef()
     const addPosts = () => {
-        props.dispatch({type:'ADD-POST'})
-        props.dispatch({type:'UPDATE-NEW-POST-TEXT', newText: ''})
+        props.dispatch(addPostACFunc())
+        props.dispatch(updateNewPostTexttACFunc(''))
     }
     let onPostChange = () => {
         if (newPostElement.current) {
             let text = newPostElement.current.value
-            props.dispatch({type:'UPDATE-NEW-POST-TEXT', newText: text})
+            props.dispatch(updateNewPostTexttACFunc(text))
         }
     }
     return (
