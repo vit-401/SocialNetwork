@@ -1,6 +1,9 @@
 // import {rerenderEntireTree} from "../index";
 
 
+import {dialogsReduser} from "./dialogs-reduser";
+import {profileReduser} from "./profile-reduser";
+
 export type messagesType = {
     id: number
     message: string
@@ -77,28 +80,9 @@ export let store: stateType = {
         return this.state
     },
     dispatch(action) {
-        if (action.type === 'ADD-POST') {
-            let newPost: postsType = {
-                id: new Date().getTime(),
-                post: this.state.profilePage.newPostText,
-                likesCount: '0'
-            }
-            this.state.profilePage.posts.push(newPost)
-            this.onChange(this.state)
-        } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
-            this.state.profilePage.newPostText = action.newText
-            this.onChange(this.state)
-        } else if (action.type === 'ADD-NEW-MESSAGE-BODY') {
-            let newMessageBody: any = {
-                id: new Date().getTime(),
-                message: this.state.dialogsPage.newMassageBody
-            }
-            this.state.dialogsPage.messages.push(newMessageBody)
-            this.onChange(this.state)
-        } else if (action.type === 'UPDATE-NEW-MESSAGE-BODY') {
-            this.state.dialogsPage.newMassageBody = action.newMessage
-            this.onChange(this.state)
-        }
+        this.state.profilePage = profileReduser(store.state.profilePage, action)
+        this.state.dialogsPage = dialogsReduser(store.state.dialogsPage, action)
+        this.onChange(this.state)
     }
 }
 export const addPostACFunc = () => ({type: 'ADD-POST'} as const)
