@@ -5,20 +5,21 @@ import {addPostACFunc, postsType, profilePageType, updateNewPostTexttACFunc} fro
 
 type propsMyPostsType = {
     profilePage: profilePageType
-    dispatch: any
+    updateNewPostText: any
+    addPosts: any
 
 }
 
 export const MyPosts: React.FC<propsMyPostsType> = (props) => {
     const newPostElement: LegacyRef<HTMLTextAreaElement> = React.createRef()
-    const addPosts = () => {
-        props.dispatch(addPostACFunc())
-        props.dispatch(updateNewPostTexttACFunc(''))
+    const onAddPost = () => {
+        props.addPosts()
+        props.updateNewPostText('')
     }
-    let onPostChange = () => {
+    const onPostChange = () => {
         if (newPostElement.current) {
             let text = newPostElement.current.value
-            props.dispatch(updateNewPostTexttACFunc(text))
+            props.updateNewPostText(text)
         }
     }
     return (
@@ -27,7 +28,7 @@ export const MyPosts: React.FC<propsMyPostsType> = (props) => {
             <div>New Post</div>
             <textarea className={s.textarea} ref={newPostElement} value={props.profilePage.newPostText}
                       onChange={onPostChange}/>
-            <button className={s.btn} onClick={addPosts}>Add</button>
+            <button className={s.btn} onClick={onAddPost}>Add</button>
 
             {
                 props.profilePage.posts.map((i: any) => <Post key={i.id} post={i.post} likesCount={i.likesCount}/>)

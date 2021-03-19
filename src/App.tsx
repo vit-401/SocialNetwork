@@ -8,24 +8,18 @@ import News from "./components/News/News";
 import Settings from "./components/Settings/Settings";
 import {stateType} from "./Redux/state";
 import Dialogs from "./components/Dialogs/Dialogs";
+import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 
-type propsAppType = {
-    store:stateType
-}
 
 const App: React.FC<any> = (props) => {
-    let state = props.store.getState()
     return (
         <BrowserRouter>
             <div className='app-wrapper'>
                 <Header/>
                 <Navbar/>
                 <div className='content'>
-                    <Route path='/profile' render={() => <Profile profilePage={state.profilePage}
-                                                                  dispatch={props.store.dispatch.bind(props.store)}
-                                                                  />}/>
-                    <Route path='/dialogs' render={() => <Dialogs dialogsPage={state.dialogsPage}
-                                                                  dispatch={props.store.dispatch.bind(props.store)}/>}/>
+                    <Route path='/profile' render={() => <Profile />}/>
+                    <Route path='/dialogs' render={() => <DialogsContainer />}/>
                     <Route path='/news' render={() => <News/>}/>
                     <Route path='/settings' render={() => <Settings/>}/>
                 </div>

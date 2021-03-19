@@ -1,16 +1,12 @@
 import React from "react";
-import {MyPosts} from "./MyPosts/MyPosts";
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
-import {postsType, profilePageType, stateType} from "../../Redux/state";
+import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
 
-type propsProfileType = {
-    profilePage: profilePageType
-    dispatch: any
-}
 
-export const Profile: React.FC<propsProfileType> = (props) => {
+
+export const Profile = () => {
     return <div>
         <ProfileInfo/>
-        <MyPosts dispatch={props.dispatch} profilePage={props.profilePage}/>
+        <MyPostsContainer/>
     </div>;
 }

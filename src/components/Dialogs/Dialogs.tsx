@@ -18,17 +18,18 @@ type dialogsPropsType = {
         dialogs: Array<dialogsType>
         newMassageBody: string
     }
-    dispatch: (x: any) => void
+    addNewMessage: any
+    updateNewMessage: any
 }
 
 const Dialogs: React.FC<dialogsPropsType> = (props) => {
     const onChangeMessage = (e: any) => {
         let body = e.currentTarget.value
-        props.dispatch(updateNewMessageCreator(body))
+        props.updateNewMessage(body)
     }
     const sendNewMeassage = () => {
-        props.dispatch(addNewMessageCreator())
-        props.dispatch(updateNewMessageCreator(''))
+        props.addNewMessage()
+        props.updateNewMessage('')
     }
     return (
         <div className={s.dialogs}>
