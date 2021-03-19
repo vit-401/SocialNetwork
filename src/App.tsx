@@ -13,7 +13,7 @@ type propsAppType = {
     store:stateType
 }
 
-const App: React.FC<propsAppType> = (props) => {
+const App: React.FC<any> = (props) => {
     let state = props.store.getState()
     return (
         <BrowserRouter>
@@ -24,7 +24,7 @@ const App: React.FC<propsAppType> = (props) => {
                     <Route path='/profile' render={() => <Profile profilePage={state.profilePage}
                                                                   dispatch={props.store.dispatch.bind(props.store)}
                                                                   />}/>
-                    <Route path='/dialogs' render={() => <Dialogs dialogsPage={props.store.state.dialogsPage}
+                    <Route path='/dialogs' render={() => <Dialogs dialogsPage={state.dialogsPage}
                                                                   dispatch={props.store.dispatch.bind(props.store)}/>}/>
                     <Route path='/news' render={() => <News/>}/>
                     <Route path='/settings' render={() => <Settings/>}/>

@@ -1,7 +1,14 @@
-// @ts-ignore
 import {postsType} from "./state";
 
-export const profileReduser = (state: any, action: any) => {
+let initialState = {
+    posts: [
+        {id: 1, post: 'Post 1', likesCount: '32'},
+        {id: 2, post: 'Post 2', likesCount: '21'},
+        {id: 3, post: 'Post 3', likesCount: '14'}
+    ],
+    newPostText: ''
+}
+export const profileReduser = (state: any = initialState, action: any) => {
     switch (action.type) {
         case'ADD-POST':
 

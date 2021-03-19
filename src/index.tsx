@@ -1,9 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import {store} from "./Redux/state";
+// import {store} from "./Redux/state";
 import App from "./App";
 import './normalize.css'
 import './index.css';
+import {store} from "./Redux/redux-srore";
 
 
 
