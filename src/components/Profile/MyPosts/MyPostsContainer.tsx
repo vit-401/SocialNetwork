@@ -1,26 +1,24 @@
-import React, {LegacyRef} from "react";
-import s from './style.module.scss';
-import {Post} from "../../Post/Post";
-import {addPostACFunc, postsType, profilePageType, stateType, updateNewPostTexttACFunc} from "../../../Redux/state";
+import React from "react";
+
+import {connect} from "react-redux";
 import {MyPosts} from "./MyPosts";
-import { StoreContext } from "../../../StoreContext";
+import {addPostACFunc, updateNewPostTexttACFunc} from "../../../Redux/profile-reduser";
 
 
-export const MyPostsContainer: React.FC = () => {
-    return (
-        <StoreContext.Consumer>{
-            (store:any) => {
-                let state = store.getState().profilePage
-                const addPosts = () => {
-                    store.dispatch(addPostACFunc())
-                }
-                let updateNewPostText = (text: string) => {
-                    store.dispatch(updateNewPostTexttACFunc(text))
-                }
-                return <MyPosts updateNewPostText={updateNewPostText} profilePage={state} addPosts={addPosts}/>
-            }
-        }
-
-        </StoreContext.Consumer>
-    )
+let mapStateToProps = (state: any) => {
+    return {
+        profilePage: state.profilePage
+    }
 }
+let mapDispatchToProps = (dispatch: any) => {
+    return {
+        updateNewPostText: (text: any) => {
+            dispatch(updateNewPostTexttACFunc(text))
+        },
+        addPosts: () => {
+            dispatch(addPostACFunc())
+        },
+    }
+}
+
+export const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts);

@@ -2,7 +2,8 @@ import React from "react";
 import s from './style.module.scss'
 import {Message} from "./Message/Message";
 import {DialogItem} from "./DialogItem/DialogItem";
-import {addNewMessageCreator, updateNewMessageCreator} from "../../Redux/state";
+
+
 
 type messagesType = {
     id: number

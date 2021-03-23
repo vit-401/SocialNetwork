@@ -1,4 +1,3 @@
-
 let initialState = {
     dialogs: [
         {id: 1, name: "Vitally"},
@@ -13,19 +12,21 @@ let initialState = {
     ],
     newMassageBody: ''
 }
-export const dialogsReduser = (state: any = initialState, action: any) => {
+export const dialogsReducer = (state: any = initialState, action: any) => {
     switch (action.type) {
         case 'ADD-NEW-MESSAGE-BODY':
             let newMessageBody: any = {
                 id: new Date().getTime(),
                 message: state.newMassageBody
             }
-            state.messages.push(newMessageBody)
-            return state
+            return {...state, messages: [...state.messages, newMessageBody]}
         case 'UPDATE-NEW-MESSAGE-BODY':
             state.newMassageBody = action.newMessage
-            return state
+            return {...state, newMassageBody: action.newMessage}
         default:
             return state
     }
 }
+
+export const addNewMessageCreator = () => ({type: 'ADD-NEW-MESSAGE-BODY'} as const)
+export const updateNewMessageCreator = (body: string) => ({type: 'UPDATE-NEW-MESSAGE-BODY', newMessage: body} as const)

@@ -1,4 +1,3 @@
-import {postsType} from "./state";
 
 let initialState = {
     posts: [
@@ -8,22 +7,25 @@ let initialState = {
     ],
     newPostText: ''
 }
-export const profileReduser = (state: any = initialState, action: any) => {
+export const profileReducer = (state: any = initialState, action: any) => {
     switch (action.type) {
         case'ADD-POST':
 
-            let newPost: postsType = {
+            let newPost: any = {
                 id: new Date().getTime(),
                 post: state.newPostText,
                 likesCount: '0'
             }
-            state.posts.push(newPost)
-            return state
+            return {...state, posts:[...state.posts, newPost]}
         case'UPDATE-NEW-POST-TEXT':
-            state.newPostText = action.newText
-            return state
+            return {...state, newPostText: action.newText}
         default:
             return state
     }
 
 }
+
+export const addPostACFunc = () => ({type: 'ADD-POST'} as const)
+export const updateNewPostTexttACFunc = (text: string) => ({type: 'UPDATE-NEW-POST-TEXT', newText: text} as const)
+
+
