@@ -1,30 +1,5 @@
 let initialState = {
-    users: [
-        {
-            id: 1,
-            followed: false,
-            fullName: 'Vitally',
-            status: 'I am a boss',
-            photo: 'http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png',
-            location: {city: 'Kiev', country: 'Ukrainian'}
-        },
-        {
-            id: 2,
-            followed: true,
-            fullName: 'Bob',
-            status: 'I am not a boss',
-            photo: 'http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png',
-            location: {city: 'Moscow', country: 'Russia'}
-        },
-        {
-            id: 3,
-            followed: false,
-            fullName: 'Alex',
-            status: 'I am little boss',
-            photo: 'http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png',
-            location: {city: 'Minsk', country: 'Belarus'}
-        },
-    ]
+    users: []
 }
 export const usersReducer = (state: any = initialState, action: any) => {
     let userFinded
@@ -48,7 +23,7 @@ export const usersReducer = (state: any = initialState, action: any) => {
             return {...state, users: [...userFinded]}
         case 'SET-USERS':
             debugger
-            return {...state, users: [...state.users, ...action.users]}
+            return {...state, users: action.users.map((user: any) => ({...user}))}
         default:
             return state
     }

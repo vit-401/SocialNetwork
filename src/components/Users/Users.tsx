@@ -1,62 +1,51 @@
 import React from "react";
 import s from './style.module.scss'
+import axios from "axios";
 
-export const Users = (props: any) => {
+export class Users extends React.Component<any> {
+    constructor(props:any) {
+        super(props);
 
-if (props.users.length === 0) {
-    props.setUsers([
-        {
-            id: 4,
-            followed: true,
-            fullName: 'Anna',
-            status: 'I am little',
-            photo: 'http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png',
-            location: {city: 'Moldova', country: 'Ukrainian'}
-        },
-        {
-            id: 5,
-            followed: false,
-            fullName: 'Kriss',
-            status: 'I am not ',
-            photo: 'http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png',
-            location: {city: 'USA', country: 'Russia'}
-        },
-        {
-            id: 6,
-            followed: true,
-            fullName: 'Simon',
-            status: 'I am',
-            photo: 'http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png',
-            location: {city: 'Afrika', country: 'Belarus'}
-        },
-    ])
-}
-return (
-    <>
-        <div>
-            {props.users.map((i: { id: number, photo: string, fullName: string, status: string, followed: boolean }, index: number) => {
-                return <div key={i.id}>
-                    <div>
-                        <img className={s.img} src={i.photo} alt=""/>
-                    </div>
-                    <div>
-                        {i.fullName}
-                    </div>
-                    <div>status: {i.status}</div>
-                    <div>
-                        {
-                            i.followed
-                                ? <button onClick={() => {
-                                    props.unFollow(i.id)
-                                }}>UnFollow</button>
-                                : <button onClick={() => {
-                                    props.follow(i.id)
-                                }}>Follow</button>
-                        }
-                    </div>
+    }
+
+    componentDidMount(): void {
+        axios('https://social-network.samuraijs.com/api/1.0/users').then(res => {
+            debugger
+            this.props.setUsers(res.data.items)
+        })
+    }
+
+    render() {
+
+        return (
+            <>
+                <div>
+                    {this.props.users.map((i: any) => {
+                        return <div key={i.id}>
+                            <div>
+                                <img className={s.img}
+                                     src={!i.photos.small ? 'http://s1.iconbird.com/ico/0612/practika/w256h2561339698323user.png' : i.photos.large}
+                                     alt=""/>
+                            </div>
+                            <div>
+                                {i.name}
+                            </div>
+                            <div>status: {i.status}</div>
+                            <div>
+                                {
+                                    i.followed
+                                        ? <button onClick={() => {
+                                            this.props.unFollow(i.id)
+                                        }}>UnFollow</button>
+                                        : <button onClick={() => {
+                                            this.props.follow(i.id)
+                                        }}>Follow</button>
+                                }
+                            </div>
+                        </div>
+                    })}
                 </div>
-            })}
-        </div>
-    </>
-)
+            </>
+        )
+    }
 }
