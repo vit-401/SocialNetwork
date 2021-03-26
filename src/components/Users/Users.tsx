@@ -9,7 +9,16 @@ export class Users extends React.Component<any> {
     }
 
     componentDidMount(): void {
-        axios('https://social-network.samuraijs.com/api/1.0/users').then(res => {
+        axios(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`).then(res => {
+            this.props.setTotalUsersCount(res.data.totalCount)
+            debugger
+            this.props.setUsers(res.data.items)
+        })
+    }
+
+    onPageChanged = (pageNumber: number) => {
+        this.props.setCurrentPage(pageNumber)
+        axios(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`).then(res => {
             debugger
             this.props.setUsers(res.data.items)
         })
@@ -27,12 +36,16 @@ export class Users extends React.Component<any> {
 
         return (
             <>
-                {
-                    pages.map(p => {
-                        return <div
-                            className={this.props.currentPage === p ? s.activePagination : s.pagination}>{p}</div>
-                    })
-                }
+                <div className={s.paginationWrapper}>
+                    {
+                        pages.map(p => {
+                            return <div
+                                className={this.props.currentPage === p ? s.activePagination : s.pagination}
+                                onClick={() => this.onPageChanged(p)}>{p}</div>
+                        })
+                    }
+                </div>
+
                 <div>
                     {this.props.users.map((i: any) => {
                         return <div key={i.id}>
