@@ -3,7 +3,7 @@ import s from './style.module.scss'
 import axios from "axios";
 
 export class Users extends React.Component<any> {
-    constructor(props:any) {
+    constructor(props: any) {
         super(props);
 
     }
@@ -15,10 +15,24 @@ export class Users extends React.Component<any> {
         })
     }
 
+
     render() {
+        let pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize)
+        let pages = [];
+        console.log(pagesCount)
+        for (let i = 1; i <= pagesCount; i++) {
+            console.log(i)
+            pages.push(i)
+        }
 
         return (
             <>
+                {
+                    pages.map(p => {
+                        return <div
+                            className={this.props.currentPage === p ? s.activePagination : s.pagination}>{p}</div>
+                    })
+                }
                 <div>
                     {this.props.users.map((i: any) => {
                         return <div key={i.id}>
