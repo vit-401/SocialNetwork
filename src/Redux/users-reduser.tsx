@@ -2,7 +2,8 @@ let initialState = {
     users: [],
     pageSize: 5,
     totalUsersCount: 0,
-    currentPage: 3
+    currentPage: 3,
+    isFetching: false
 }
 export const usersReducer = (state: any = initialState, action: any) => {
     let userFinded
@@ -29,8 +30,9 @@ export const usersReducer = (state: any = initialState, action: any) => {
         case 'SET-CURRENT-PAGE':
             return {...state, currentPage: action.currentPage}
         case 'SET-TOTAL-USERS-COUNT':
-            debugger
             return {...state, totalUsersCount: action.usersCount}
+            case 'IS-FETCHING':
+            return {...state, isFetching: action.isFetching}
         default:
             return state
     }
@@ -41,3 +43,4 @@ export const unfollowAC = (userId: number) => ({type: 'UNFOLLOW', userId})
 export const seteUsersAC = (users: any) => ({type: 'SET-USERS', users})
 export const seteCurrentAC = (currentPage: number) => ({type: 'SET-CURRENT-PAGE', currentPage})
 export const seteTotalUsersCountAC = (usersCount: number) => ({type: 'SET-TOTAL-USERS-COUNT', usersCount})
+export const isFetchingAC = (isFetching: boolean) => ({type: 'IS-FETCHING', isFetching})
