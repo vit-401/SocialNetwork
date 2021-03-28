@@ -66,15 +66,12 @@ let mapStateToProps = (state: any) => {
         isFetching: state.userPage.isFetching
     }
 }
-let mapDispatchToProps = (dispatch: any) => {
-    return {
-        follow: (userId: number) => dispatch(followAC(userId)),
-        unFollow: (userId: number) => dispatch(unfollowAC(userId)),
-        setUsers: (users: Array<any>) => dispatch(seteUsersAC(users)),
-        setCurrentPage: (currentPage: number) => dispatch(seteCurrentAC(currentPage)),
-        setTotalUsersCount: (usersCount: number) => dispatch(seteTotalUsersCountAC(usersCount)),
-        setIsFetch: (isFetching: boolean) => dispatch(isFetchingAC(isFetching))
-    }
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer)
+export default connect(mapStateToProps,  {
+    follow:followAC,
+    unFollow: unfollowAC,
+    setUsers: seteUsersAC,
+    setCurrentPage:seteCurrentAC,
+    setTotalUsersCount: seteTotalUsersCountAC,
+    setIsFetch: isFetchingAC
+})(UsersContainer)
