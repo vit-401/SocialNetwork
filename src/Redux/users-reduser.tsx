@@ -8,7 +8,9 @@ let initialState = {
 export const usersReducer = (state: any = initialState, action: any) => {
     let userFinded
     switch (action.type) {
+
         case 'FOLLOW':
+            debugger
             userFinded = state.users.map((i: { id: any, followed: boolean }) => {
                 if (i.id === action.userId) {
                     return {...i, followed: true}
@@ -31,7 +33,7 @@ export const usersReducer = (state: any = initialState, action: any) => {
             return {...state, currentPage: action.currentPage}
         case 'SET-TOTAL-USERS-COUNT':
             return {...state, totalUsersCount: action.usersCount}
-            case 'IS-FETCHING':
+        case 'IS-FETCHING':
             return {...state, isFetching: action.isFetching}
         default:
             return state

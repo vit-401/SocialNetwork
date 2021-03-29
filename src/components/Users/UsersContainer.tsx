@@ -19,7 +19,9 @@ class UsersContainer extends React.Component<any> {
 
     componentDidMount(): void {
         this.props.setIsFetch(true)
-        axios(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`).then(res => {
+        axios(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {
+            withCredentials: true,
+        }).then(res => {
             this.props.setIsFetch(false)
             this.props.setTotalUsersCount(res.data.totalCount)
             this.props.setUsers(res.data.items)
@@ -29,7 +31,9 @@ class UsersContainer extends React.Component<any> {
     onPageChanged = (pageNumber: number) => {
         this.props.setCurrentPage(pageNumber)
         this.props.setIsFetch(true)
-        axios(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`).then(res => {
+        axios(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`, {
+            withCredentials: true,
+        }).then(res => {
             this.props.setIsFetch(false)
             this.props.setUsers(res.data.items)
 
@@ -67,11 +71,11 @@ let mapStateToProps = (state: any) => {
     }
 }
 
-export default connect(mapStateToProps,  {
-    follow:followAC,
+export default connect(mapStateToProps, {
+    follow: followAC,
     unFollow: unfollowAC,
     setUsers: seteUsersAC,
-    setCurrentPage:seteCurrentAC,
+    setCurrentPage: seteCurrentAC,
     setTotalUsersCount: seteTotalUsersCountAC,
     setIsFetch: isFetchingAC
 })(UsersContainer)
