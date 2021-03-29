@@ -8,7 +8,7 @@ export const Header = (props: any) => {
         <div>
             {
                 props.isAuth
-                    ? <div style={{color: '#fff'}}>name: {props.login}</div>
+                    ? <div style={{color: '#ffffff'}}>name: {props.login}</div>
                     : <NavLink activeStyle={{color: '#efefef'}}
                                style={{color: '#fff', float: "right"}}
                                to={'/login'}>Log In</NavLink>
