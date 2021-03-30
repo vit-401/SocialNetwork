@@ -7,6 +7,11 @@ export function ProfileInfo(props: any) {
         return <Preloader/>
     }
     return <div>
-        <img className={s.img} src={props.profile.photos.large} alt=""/>
-    </div>;
+        {
+            props.profile.photos.large
+                ? <img className={s.img} src={props.profile.photos.large} alt=""/>
+                : <img className={s.img} src={'http://s1.iconbird.com/ico/0612/practika/w256h2561339698323user.png'}
+                       alt=""/>
+        }
+    </div>
 }
