@@ -1,6 +1,6 @@
 import React from "react";
 import s from "./style.module.scss";
-import {NavLink} from "react-router-dom";
+import {NavLink, Redirect} from "react-router-dom";
 
 import {follow, unfollow} from "../../Redux/users-reduser";
 
@@ -10,6 +10,7 @@ export const Users = (props: any) => {
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i)
     }
+
     return (
         <>
             <div className={s.paginationWrapper}>
