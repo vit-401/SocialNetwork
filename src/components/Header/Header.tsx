@@ -2,7 +2,6 @@ import React from "react";
 import {NavLink} from "react-router-dom";
 
 export const Header = (props: any) => {
-    debugger
     return <header className='header'>
         <img src="" alt=""/>
         <div>

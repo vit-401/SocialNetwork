@@ -1,17 +1,14 @@
 import React from "react";
-import {connect} from "react-redux";
 import {
-    follow,
+    follow, getUsers,
     setCurrentPage,
-    setTotalUsersCount,
     setUsers,
     toggleFollowingProgress,
-    toggleIsFetching,
     unfollow,
 } from "../../Redux/users-reduser";
 import {Users} from "./Users";
 import {Preloader} from "../../common/preloader/Preloader";
-import {getUsers} from "../../API/api";
+import {connect} from "react-redux";
 
 class UsersContainer extends React.Component<any> {
     constructor(props: any) {
@@ -19,24 +16,11 @@ class UsersContainer extends React.Component<any> {
     }
 
     componentDidMount(): void {
-        this.props.toggleIsFetching(true);
-        getUsers(this.props.currentPage, this.props.pageSize)
-            .then(data => {
-                this.props.toggleIsFetching(false);
-                this.props.setTotalUsersCount(data.totalCount)
-                this.props.setUsers(data.items)
-            })
+        this.props.getUsers(this.props.currentPage, this.props.pageSize)
     }
 
     onPageChanged = (pageNumber: number) => {
-        this.props.setCurrentPage(pageNumber)
-        this.props.toggleIsFetching(true);
-        getUsers(pageNumber, this.props.pageSize)
-            .then(data => {
-                this.props.toggleIsFetching(false);
-                this.props.setUsers(data.items)
-
-            })
+        this.props.getUsers(pageNumber, this.props.pageSize)
     }
 
 
@@ -70,11 +54,11 @@ let mapStateToProps = (state: any) => {
 
 export default connect(mapStateToProps,
     {
-        follow,
-        unfollow,
         setUsers,
         setCurrentPage,
-        setTotalUsersCount,
-        toggleIsFetching,
-        toggleFollowingProgress
+        toggleFollowingProgress,
+        getUsers,
+        follow,
+        unfollow
+
     })(UsersContainer);

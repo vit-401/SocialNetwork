@@ -1,9 +1,8 @@
 import React from "react";
 import {Profile} from "./Profile";
 import {connect} from "react-redux";
-import {setProfileACFunc} from "../../Redux/profile-reduser";
 import {withRouter} from "react-router-dom";
-import {getProfile} from "../../API/api";
+import {getProfileThunkCreator} from "../../Redux/profile-reduser";
 
 
 class ProfileContainer extends React.Component <any> {
@@ -12,15 +11,9 @@ class ProfileContainer extends React.Component <any> {
     }
 
     componentDidMount() {
+        debugger
         let userId = this.props.match.params.userId
-        if (!userId) {
-            userId = 1000
-        }
-        getProfile(userId)
-            .then(data => {
-                debugger
-                this.props.setUserProfile(data)
-            })
+        this.props.getProfileThunkCreator(userId)
     }
 
     render() {
@@ -29,7 +22,6 @@ class ProfileContainer extends React.Component <any> {
 }
 
 let mapSateToProps = (state: any) => {
-    debugger
     return {
         profile: state.profilePage.profile
     }
@@ -37,6 +29,6 @@ let mapSateToProps = (state: any) => {
 
 let WithRouterContainerComponent = withRouter(ProfileContainer)
 export default connect(mapSateToProps, {
-    setUserProfile: setProfileACFunc
+    getProfileThunkCreator
 })(WithRouterContainerComponent)
 

@@ -1,3 +1,5 @@
+import {getProfile} from "../API/api";
+
 let initialState = {
     posts: [
         {id: 1, post: 'Post 1', likesCount: '32'},
@@ -30,5 +32,17 @@ export const profileReducer = (state: any = initialState, action: any) => {
 export const addPostACFunc = () => ({type: 'ADD-POST'})
 export const setProfileACFunc = (profile: any) => ({type: 'SET-USER-PROFILE', profile})
 export const updateNewPostTexttACFunc = (text: string) => ({type: 'UPDATE-NEW-POST-TEXT', newText: text})
+
+export const getProfileThunkCreator = (userId: number) => (dispatch: any) => {
+    debugger
+    if (!userId) {
+        userId = 1000
+    }
+    getProfile(userId)
+        .then(data => {
+            dispatch(setProfileACFunc(data))
+        })
+}
+
 
 

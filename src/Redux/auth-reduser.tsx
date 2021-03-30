@@ -1,3 +1,5 @@
+import {authMe} from "../API/api";
+
 let initialState = {
     users: null,
     email: null,
@@ -24,3 +26,13 @@ export const setUserDataAC = (userId: any, email: any, login: any) => ({
     type: 'SET-USER-DATA',
     data: {userId, email, login}
 })
+
+
+export const authMeThunkCreator = () => (dispatch: any) => {
+    authMe().then(data => {
+        let {id, email, login} = data.data
+        if (data.resultCode === 0) {
+            dispatch(setUserDataAC(id, email, login))
+        }
+    })
+}
