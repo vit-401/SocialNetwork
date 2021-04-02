@@ -1,13 +1,19 @@
 import React from "react";
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
 import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
-import {Redirect} from "react-router-dom";
 
 
-export const Profile = (props: any) => {
+export class Profile extends React.Component<any> {
 
-    return <div>
-        <ProfileInfo profile={props.profile}/>
-        <MyPostsContainer/>
-    </div>;
+
+    render() {
+        return <div>
+
+
+
+            <ProfileInfo updateStatus={this.props.updateStatusTC} status={this.props.status}
+                         profile={this.props.profile}/>
+            <MyPostsContainer/>
+        </div>;
+    }
 }

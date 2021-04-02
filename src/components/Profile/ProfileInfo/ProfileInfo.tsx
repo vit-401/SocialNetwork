@@ -14,6 +14,6 @@ export function ProfileInfo(props: any) {
                 : <img className={s.img} src={'http://s1.iconbird.com/ico/0612/practika/w256h2561339698323user.png'}
                        alt=""/>
         }
-        <ProfileStatus status={'hello my friend'}/>
+        <ProfileStatus updateStatus={props.updateStatus} status={props.status}/>
     </div>
 }

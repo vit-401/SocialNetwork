@@ -36,7 +36,7 @@ export const setUserDataAC = (userId: any, email: any, login: any) => ({
 
 
 export const authMeThunkCreator = () => (dispatch: any) => {
-    authMe().then(data => {
+    authMe.me().then(data => {
         let {id, email, login} = data.data
         if (data.resultCode === 0) {
             dispatch(setUserDataAC(id, email, login))

@@ -1,4 +1,4 @@
-import {getProfile} from "../API/api";
+import {profileAPI, usersAPI} from "../API/api";
 
 type PostsType = {
     id: number,
@@ -8,7 +8,8 @@ type PostsType = {
 export type  ProfileStateType = {
     posts: Array<PostsType>
     newPostText: string
-    profile: any
+    profile:any
+    status: string
 }
 
 let initialState = {
@@ -18,7 +19,8 @@ let initialState = {
         {id: 3, post: 'Post 3', likesCount: '14'}
     ],
     newPostText: '',
-    profile: null
+    profile: null,
+    status: ''
 }
 export const profileReducer = (state: ProfileStateType = initialState, action: any) => {
     switch (action.type) {
@@ -34,6 +36,8 @@ export const profileReducer = (state: ProfileStateType = initialState, action: a
             return {...state, newPostText: action.newText}
         case'SET-USER-PROFILE':
             return {...state, profile: action.profile}
+        case'SET-STATUS':
+            return {...state, status: action.status}
         default:
             return state
     }
@@ -43,13 +47,31 @@ export const profileReducer = (state: ProfileStateType = initialState, action: a
 export const addPostACFunc = () => ({type: 'ADD-POST'})
 export const setProfileACFunc = (profile: any) => ({type: 'SET-USER-PROFILE', profile})
 export const updateNewPostTexttACFunc = (text: string) => ({type: 'UPDATE-NEW-POST-TEXT', newText: text})
+export const setStatusACFunc = (status: string) => ({type: 'SET-STATUS', status})
+
+
+export const getStatusTC = (userId: number) => (dispatch: any) => {
+    profileAPI.getStatus(userId)
+        .then((res) => {
+            debugger
+            dispatch(setStatusACFunc(res.data))
+        })
+}
+
+export const updateStatusTC = (status: string) => (dispatch: any) => {
+    profileAPI.updateStatus(status)
+        .then((res) => {
+            if (res.data.resultCode === 0){
+                dispatch(setStatusACFunc(status))
+            }
+        })
+}
 
 export const getProfileThunkCreator = (userId: number) => (dispatch: any) => {
-    debugger
     if (!userId) {
         userId = 1000
     }
-    getProfile(userId)
+    usersAPI.getProfile(userId)
         .then(data => {
             dispatch(setProfileACFunc(data))
         })
