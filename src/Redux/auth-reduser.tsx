@@ -1,5 +1,12 @@
 import {authMe} from "../API/api";
 
+export type AuthStateType = {
+    users: any,
+    email: any,
+    login: any,
+    isAuth: boolean
+}
+
 let initialState = {
     users: null,
     email: null,

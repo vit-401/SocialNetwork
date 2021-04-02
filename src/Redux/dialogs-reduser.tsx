@@ -1,3 +1,18 @@
+type DialogsType = {
+    id: number
+    name: string
+}
+type MessagesType = {
+    id: number
+    message: string
+}
+
+export type DialogStateType = {
+    dialogs: Array<DialogsType>
+    messages: Array<MessagesType>
+    newMassageBody: string
+}
+
 let initialState = {
     dialogs: [
         {id: 1, name: "Vitally"},
@@ -12,7 +27,7 @@ let initialState = {
     ],
     newMassageBody: ''
 }
-export const dialogsReducer = (state: any = initialState, action: any) => {
+export const dialogsReducer = (state: DialogStateType = initialState, action: any) => {
     switch (action.type) {
         case 'ADD-NEW-MESSAGE-BODY':
             let newMessageBody: any = {

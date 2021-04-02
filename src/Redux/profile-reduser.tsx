@@ -1,5 +1,16 @@
 import {getProfile} from "../API/api";
 
+type PostsType = {
+    id: number,
+    post: string
+    likesCount: string
+}
+export type  ProfileStateType = {
+    posts: Array<PostsType>
+    newPostText: string
+    profile: any
+}
+
 let initialState = {
     posts: [
         {id: 1, post: 'Post 1', likesCount: '32'},
@@ -9,7 +20,7 @@ let initialState = {
     newPostText: '',
     profile: null
 }
-export const profileReducer = (state: any = initialState, action: any) => {
+export const profileReducer = (state: ProfileStateType = initialState, action: any) => {
     switch (action.type) {
         case'ADD-POST':
 
