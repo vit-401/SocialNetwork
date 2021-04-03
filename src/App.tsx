@@ -7,11 +7,15 @@ import Settings from "./components/Settings/Settings";
 import UsersContainer from "./components/Users/UsersContainer";
 import WithRouterContainerComponent from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
-import {Login} from "./components/Login/Login";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
+import LoginContainer from "./components/Login/Login";
 
 
 const App: React.FC = () => {
+
+    const onSubmit = (value:any) => {
+        console.log(value)
+    }
     return (
         <BrowserRouter>
             <div className='app-wrapper'>
@@ -23,7 +27,7 @@ const App: React.FC = () => {
                     <Route path='/users' render={() => <UsersContainer/>}/>
                     <Route path='/news' render={() => <News/>}/>
                     <Route path='/settings' render={() => <Settings/>}/>
-                    <Route path='/login' render={() => <Login/>}/>
+                    <Route path='/login' render={() => <LoginContainer onSubmit={onSubmit}/>}/>
                 </div>
             </div>
         </BrowserRouter>
