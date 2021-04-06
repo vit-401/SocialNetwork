@@ -48,7 +48,6 @@ export const setStatusACFunc = (status: string) => ({type: 'SET-STATUS', status}
 export const getStatusTC = (userId: number) => (dispatch: any) => {
     profileAPI.getStatus(userId)
         .then((res) => {
-            debugger
             dispatch(setStatusACFunc(res.data))
         })
 }
