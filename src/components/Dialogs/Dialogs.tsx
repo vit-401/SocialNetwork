@@ -2,19 +2,19 @@ import React from "react";
 import s from './style.module.scss'
 import {Message} from "./Message/Message";
 import {DialogItem} from "./DialogItem/DialogItem";
+import AddMessageForm from "./AddMessageForm";
+import {FormSubmitHandler} from "redux-form";
 
 
-
-
-type messagesType = {
+export type messagesType = {
     id: number
     message: string
 }
-type dialogsType = {
+export type dialogsType = {
     id: number
     name: string
 }
-type dialogsPropsType = {
+export type dialogsPropsType = {
     dialogsPage: {
         messages: Array<messagesType>
         dialogs: Array<dialogsType>
@@ -26,13 +26,13 @@ type dialogsPropsType = {
 }
 
 const Dialogs: React.FC<dialogsPropsType> = (props) => {
-    const onChangeMessage = (e: any) => {
-        let body = e.currentTarget.value
-        props.updateNewMessage(body)
+
+    const sendNewMeassage = (value: string) => {
+        props.addNewMessage(value)
     }
-    const sendNewMeassage = () => {
-        props.addNewMessage()
-        props.updateNewMessage('')
+    const submit: any = (values: any) => {
+        console.log(values.message)
+        sendNewMeassage(values.message)
     }
     return (
         <div className={s.dialogs}>
@@ -43,12 +43,8 @@ const Dialogs: React.FC<dialogsPropsType> = (props) => {
             <div className={s.messages}>
                 {props.dialogsPage.messages.map(item => <Message key={item.id} message={item.message}/>)}
             </div>
-            <div>
-                <textarea value={props.dialogsPage.newMassageBody} onChange={onChangeMessage}/>
-            </div>
-            <div>
-                <button onClick={sendNewMeassage}>Send</button>
-            </div>
+            <AddMessageForm onSubmit={submit}/>
+
         </div>
     )
 }

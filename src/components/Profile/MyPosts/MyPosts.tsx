@@ -1,39 +1,30 @@
 import React, {LegacyRef} from "react";
-import s from './style.module.scss';
 import {Post} from "../../Post/Post";
+import AddPostForm from "./AddPostForm";
 
 type propsMyPostsType = {
     profilePage: any
-    updateNewPostText: any
     addPosts: any
 
 }
 
 export const MyPosts: React.FC<any> = (props) => {
     const newPostElement: LegacyRef<HTMLTextAreaElement> = React.createRef()
-    const onAddPost = () => {
-        props.addPosts()
-        props.updateNewPostText('')
+    const onAddPost = (value:string) => {
+        props.addPosts(value)
     }
-    const onPostChange = () => {
-        if (newPostElement.current) {
-            let text = newPostElement.current.value
-            props.updateNewPostText(text)
-        }
+
+    const submit: any = (values: any) => {
+        console.log(values.post)
+        onAddPost(values.post)
     }
     return (
-        <div>
-            <div>My posts</div>
-            <div>New Post</div>
-            <textarea className={s.textarea} ref={newPostElement} value={props.profilePage.newPostText}
-                      onChange={onPostChange}/>
-            <button className={s.btn} onClick={onAddPost}>Add</button>
-
+        <>
+            <AddPostForm onSubmit={submit}/>
 
             {
                 props.profilePage.posts.map((i: any) => <Post key={i.id} post={i.post} likesCount={i.likesCount}/>)
             }
-
-        </div>
+        </>
     )
 }
