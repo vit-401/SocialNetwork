@@ -1,5 +1,6 @@
 import React from "react";
 import {NavLink} from "react-router-dom";
+import LoggedInUse from "./LoggedInUser/LoggedInUser";
 
 export const Header = (props: any) => {
     return <header className='header'>
@@ -7,7 +8,7 @@ export const Header = (props: any) => {
         <div>
             {
                 props.isAuth
-                    ? <div style={{color: '#ffffff'}}>name: {props.login}</div>
+                    ? <LoggedInUse login={props.login}/>
                     : <NavLink activeStyle={{color: '#efefef'}}
                                style={{color: '#fff', float: "right"}}
                                to={'/login'}>Log In</NavLink>

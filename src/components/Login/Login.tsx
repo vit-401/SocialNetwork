@@ -1,35 +1,29 @@
-import React, {useEffect} from 'react'
-import {Field, InjectedFormProps, reduxForm} from 'redux-form'
+import React from 'react'
+import {connect} from "react-redux";
+import {Redirect} from 'react-router-dom';
+import {login} from "../../Redux/auth-reduser";
+import LoginReduxForm from "./LoginReduxForm";
 
-let Login = (props: InjectedFormProps) => {
 
-
+let Login = (props: any) => {
+    const onSubmit = (value: any) => {
+        console.log(value.login, value.password, value.remamber)
+        props.login(value.login, value.password, value.remamber)
+    }
+    if (props.isAuth) {
+        return <Redirect to={'/profile/:userId'}/>
+    }
     return (
         <>
             <div>LoginPage</div>
             <h1>Login</h1>
-            <form onSubmit={props.handleSubmit}>
-                <div>
-                    <label htmlFor="login">Login</label>
-                    <Field name="login" component="input" type="text"/>
-                </div>
-                <div>
-                    <label htmlFor="password">Password</label>
-                    <Field name="password" component="input" type="password"/>
-                </div>
-                <div>
-                    <Field name="remamber" component="input" type="checkbox"/>
-                    <label htmlFor="remamber">Remamber me</label>
-                </div>
-                <div>
-                    <button type="submit" >Login</button>
-                </div>
-            </form>
+            <LoginReduxForm onSubmit={onSubmit}/>
         </>
     )
 }
-
-const LoginContainer = reduxForm({
-    form: 'login'
-})(Login)
-export default LoginContainer
+const mapStateToProps = (state: any) => {
+    return {
+        isAuth: state.auth.isAuth
+    }
+}
+export default connect(mapStateToProps, {login})(Login)

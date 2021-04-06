@@ -1,4 +1,5 @@
 import {authMe} from "../API/api";
+import {Dispatch} from "redux";
 
 export type AuthStateType = {
     users: any,
@@ -19,8 +20,7 @@ export const authReducer = (state: any = initialState, action: any) => {
         case 'SET-USER-DATA':
             return {
                 ...state,
-                ...action.data,
-                isAuth: true
+                ...action.data
             }
 
         default:
@@ -29,17 +29,31 @@ export const authReducer = (state: any = initialState, action: any) => {
 }
 
 
-export const setUserDataAC = (userId: any, email: any, login: any) => ({
-    type: 'SET-USER-DATA',
-    data: {userId, email, login}
-})
+export const setUserDataAC = (userId: any, email: any, login: any, isAuth: boolean) => {
+    return {
+        type: 'SET-USER-DATA',
+        data: {userId, email, login, isAuth}
+    }
+}
 
 
 export const authMeThunkCreator = () => (dispatch: any) => {
     authMe.me().then(data => {
         let {id, email, login} = data.data
         if (data.resultCode === 0) {
-            dispatch(setUserDataAC(id, email, login))
+            dispatch(setUserDataAC(id, email, login, true))
         }
+    })
+}
+
+export const login = (email: string, password: string, rememberMe: boolean) => (dispatch: any) => {
+    authMe.login(email, password, rememberMe).then((res) => {
+        dispatch(authMeThunkCreator())
+    })
+}
+
+export const logout = () => (dispatch: Dispatch) => {
+    authMe.logout().then((res) => {
+        dispatch(setUserDataAC(null, null, null, false))
     })
 }
