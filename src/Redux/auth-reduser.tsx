@@ -31,7 +31,6 @@ export const authReducer = (state: any = initialState, action: any) => {
 
 
 export const setUserDataAC = (userId: any, email: any, login: any, isAuth: boolean) => {
-    debugger
     return {
         type: 'SET-USER-DATA',
         data: {userId, email, login, isAuth}

@@ -10,7 +10,6 @@ let Login = (props: any) => {
         props.login(value.login, value.password, value.remamber)
     }
     if (props.isAuth) {
-        debugger
         return <Redirect to={`/profile/${props.userId}`}/>
     }
     return (

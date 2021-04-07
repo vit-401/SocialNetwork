@@ -1,7 +1,6 @@
 import React from "react";
 import {
-    follow,
-    getUsers,
+    follow, getUsers,
     setCurrentPage,
     setUsers,
     toggleFollowingProgress,
@@ -12,6 +11,14 @@ import {Preloader} from "../../common/preloader/Preloader";
 import {connect} from "react-redux";
 import {withAuthRedirect} from "../../HOC/withAuthRedirect";
 import {compose} from "redux";
+import {
+    getCurrentPage,
+    getFollowingInProgress,
+    getIsFetching,
+    getPageSize,
+    getTotalUsersCount,
+    getUserSelector
+} from "../../Redux/users-selectors";
 
 class UsersContainer extends React.Component<any> {
     constructor(props: any) {
@@ -45,14 +52,25 @@ class UsersContainer extends React.Component<any> {
     }
 }
 
+// let mapStateToProps = (state: any) => {
+//     return {
+//         users: state.usersPage.users,
+//         pageSize: state.usersPage.pageSize,
+//         totalUsersCount: state.usersPage.totalUsersCount,
+//         currentPage: state.usersPage.currentPage,
+//         isFetching: state.usersPage.isFetching,
+//         followingInProgress: state.usersPage.followingInProgress,
+//     }
+// }
+
 let mapStateToProps = (state: any) => {
     return {
-        users: state.usersPage.users,
-        pageSize: state.usersPage.pageSize,
-        totalUsersCount: state.usersPage.totalUsersCount,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
-        followingInProgress: state.usersPage.followingInProgress,
+        users: getUserSelector(state),
+        pageSize: getPageSize(state),
+        totalUsersCount: getTotalUsersCount(state),
+        currentPage: getCurrentPage(state),
+        isFetching: getIsFetching(state),
+        followingInProgress: getFollowingInProgress(state),
     }
 }
 
@@ -62,8 +80,8 @@ export default compose<React.ComponentType>(
         setUsers,
         setCurrentPage,
         toggleFollowingProgress,
-        getUsers,
         follow,
+        getUsers,
         unfollow
     }),
     withAuthRedirect)(UsersContainer)

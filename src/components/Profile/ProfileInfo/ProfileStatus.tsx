@@ -6,6 +6,7 @@ export class ProfileStatus extends React.Component<any> {
         status: this.props.status
     }
     activateEditeMode = () => {
+        console.log('this', this)
         this.setState({
             editMode: true
         })
