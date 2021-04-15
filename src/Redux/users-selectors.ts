@@ -1,21 +1,32 @@
-export const getUserSelector = (state: any) => {
-    return state.usersPage.users
+import {UsersType} from './users-reducer'
+import {AppStateType} from '../app/store';
+
+export const getUsers = (state: AppStateType): Array<UsersType> => {
+    return state.usersState.users
 }
 
-export const getPageSize = (state: any) => {
-    return state.usersPage.pageSize
-}
-export const getTotalUsersCount= (state: any) => {
-    return state.usersPage.totalUsersCount
+export const getTotalUsersCount = (state: AppStateType): number => {
+    return state.usersState.totalUsersCount
 }
 
-export const getCurrentPage= (state: any) => {
-    return state.usersPage.page
+export const getPageSize = (state: AppStateType): number => {
+    return state.usersState.pageSize
 }
-export const getIsFetching= (state: any) => {
-    return state.usersPage.isFetching
+
+export const getCurrentPage = (state: AppStateType): number => {
+    return state.usersState.currentPage
 }
-export const getFollowingInProgress= (state: any) => {
-    return state.usersPage.followingInProgress
+
+export const getIsFetching = (state: AppStateType): boolean => {
+    return state.usersState.isFetching
 }
-export const s = 1
+
+export const getFollowingInProgress = (state: AppStateType): Array<number> => {
+    return state.usersState.followingInProgress
+}
+
+export const getUsersFilter = (state: AppStateType) => {
+    return state.usersState.filter
+}
+
+
